@@ -28,9 +28,6 @@ public class Robot extends TimedRobot {
     private RobotContainer m_robotContainer;
   
     String filePath = "src\\main\\java\\frc\\robot\\subsystems\\motors";
-    //motor basicTalonSRX = new motor("basicTalonSRX", filePath);
-    Motor basicTalonFX = new Motor("basicTalonFX");
-    //motor basicFalconSPX = new motor("basicFalconSPX", filePath);
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
