@@ -27,7 +27,6 @@ public class Robot extends TimedRobot {
   
     private RobotContainer m_robotContainer;
   
-    String filePath = "src\\main\\java\\frc\\robot\\subsystems\\motors";
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
@@ -36,7 +35,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
       // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
       // autonomous chooser on the dashboard.
-      motor.setMotorConfigPath(filePath);
+
     }
   
     /**
