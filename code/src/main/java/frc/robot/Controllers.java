@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.systems;
+import frc.robot.commands.wiredAPI.Motor;
 
 public class Controllers {
     //TODO: Get controller port numbers for controllers
@@ -10,16 +11,47 @@ public class Controllers {
     XboxController opController = new XboxController(1);
     
     private void driveControllerBind(){
+        //declare drive controller buttons
         String mode = "normal";
-        boolean rightBumber = driveController.getRightBumper();
+        boolean rightBumper = driveController.getRightBumper();
+        boolean leftBumper = driveController.getLeftBumper();
+        boolean rightTrigger = driveController.getRightTriggerAxis() > 0.5;
+        double leftStick = driveController.getLeftX();
+        double rightStick = driveController.getRightY();
+
+        // set drive mode
+        if (rightBumper){
+            mode = "speed";
+        } else if (leftBumper){
+            mode = "precision";
+        } else if (rightTrigger){
+            mode = "aim";
+        }  else {
+            mode = "normal";
+        }
+
+        //motor logic
+        if (mode == "normal"){
+            Motor.runSame(leftStick, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
+        } else if (mode == "precision"){
+            Motor.runSame(leftStick/2, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
+        } else if (mode == "speed"){
+            Motor.runSame(leftStick, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
+        } else if (mode == "aim"){
+            Motor.runSame(leftStick/2, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
+        }
+        
+
+
     }
     private void opControllerBind(){
+        //declare opController buttons
         boolean shooterIdleIsActive = true;
         boolean y = opController.getYButtonPressed();
         boolean b = opController.getBButton();
         boolean a = opController.getAButton();
         boolean x = opController.getXButton();
-        double rightStick = opController.getRightY();
+        double rightStick = opController.getRightX();
         double leftTrigger = opController.getLeftTriggerAxis();
 
         if (y) {

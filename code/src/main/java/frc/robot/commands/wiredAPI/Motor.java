@@ -222,11 +222,10 @@ public class Motor {
     *Runs all motors given at the same speed
     *can be given an infinite number of motors
     *Use like this:
-    *{@code motor1.runsame(0.5, motor2, motor3)}
+    *{@code Motor.runsame(0.5, motor2, motor3)}
     */
-    public void runSame(double speed, Motor ... motors)
+    public static void runSame(double speed, Motor ... motors)
     {
-        this.run(speed);
         int length = motors.length;
         for(int i = 0; i < length; i++)
         {
