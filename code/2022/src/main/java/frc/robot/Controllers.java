@@ -5,7 +5,6 @@ import frc.robot.commands.systems;
 import frc.robot.commands.wiredAPI.Motor;
 
 public class Controllers {
-    //TODO: Get controller port numbers for controllers
     //Declare Controller Objects
     XboxController driveController = new XboxController(0);
     XboxController opController = new XboxController(1);
