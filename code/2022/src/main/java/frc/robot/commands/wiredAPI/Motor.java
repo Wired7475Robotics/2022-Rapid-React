@@ -97,20 +97,20 @@ public class Motor {
         loaded = true;
         CANSparkMax CPM;
         if (Boolean.valueOf( motorProp.getProperty("brushed"))){
-            CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("port")),MotorType.kBrushless);
+            CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("motorPort")),MotorType.kBrushed);
         } else {
-            CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("port")),MotorType.kBrushed);
+            CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("motorPort")),MotorType.kBrushless);
         }
         CPM.restoreFactoryDefaults();
         return CPM;
     }
     private Spark loadSpark(Properties motorProp){
         loaded = true;
-        return new Spark(Integer.parseInt(motorProp.getProperty("")));
+        return new Spark(Integer.parseInt(motorProp.getProperty("motorPort")));
     }
     private VictorSP loadVictorSP(Properties motorProp){
         loaded = true;
-        return new VictorSP(Integer.parseInt(motorProp.getProperty("")));
+        return new VictorSP(Integer.parseInt(motorProp.getProperty("motorPort")));
     }
     
     /**
@@ -156,7 +156,7 @@ public class Motor {
         File[] MCfile = new File(filePath).listFiles();
         String filename = "";
         
-        for(int i = 0; i <= MCFileNum; i++){
+        for(int i = 0; i < MCFileNum; i++){
             FileInputStream motorFiles;
             try {
                 motorFiles = new FileInputStream(new File (MCfile[i].getPath()));
@@ -232,6 +232,14 @@ public class Motor {
             motors[i].run(speed);
         }
     }
+
+    public VictorSP getBaseControllerObject(){
+        if(motorType == "VictorSP"){
+            return victorSPMotor;
+        }
+    }
+
+
     /**
     *Runs motor(s) at oposite speed to an/group of other motor(s)
     *Can be given either an infinte number of motors, or two lists of motors:

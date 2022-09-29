@@ -8,7 +8,7 @@ import frc.robot.subsystems.Pneumatics;
 
 public class systems {
     //declare path to motor configs
-    static String filePath = "src\\main\\java\\frc\\robot\\subsystems\\motors";
+    static String filePath = "src\\main\\java\\frc\\robot\\subsystems\\motorConfigs";
     //declare motor objects to make them accessible to other classes
     public static Motor ballLoad;
     public static Motor intake;

@@ -4,12 +4,13 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.systems;
 import frc.robot.commands.wiredAPI.Motor;
 
+
 public class Controllers {
     //Declare Controller Objects
-    XboxController driveController = new XboxController(0);
-    XboxController opController = new XboxController(1);
+    static XboxController driveController = new XboxController(0);
+    static XboxController opController = new XboxController(1);
     
-    private void driveControllerBind(){
+    private static void driveControllerBind(){
         //declare drive controller buttons
         String mode = "normal";
         boolean rightBumper = driveController.getRightBumper();
@@ -17,6 +18,9 @@ public class Controllers {
         boolean rightTrigger = driveController.getRightTriggerAxis() > 0.5;
         double leftStick = driveController.getLeftX();
         double rightStick = driveController.getRightY();
+
+        double speedLeft = ;
+        double speedRight = ;
 
         // set drive mode
         if (rightBumper){
@@ -30,20 +34,12 @@ public class Controllers {
         }
 
         //motor logic
-        if (mode == "normal"){
-            Motor.runSame(leftStick, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
-        } else if (mode == "precision"){
-            Motor.runSame(leftStick/2, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
-        } else if (mode == "speed"){
-            Motor.runSame(leftStick, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
-        } else if (mode == "aim"){
-            Motor.runSame(leftStick/2, systems.leftDrive1, systems.leftDrive2, systems.rightDrive1, systems.rightDrive2);
-        }
+        
         
 
 
     }
-    private void opControllerBind(){
+    private static void opControllerBind(){
         //declare opController buttons
         boolean shooterIdleIsActive = true;
         boolean y = opController.getYButtonPressed();
@@ -52,6 +48,8 @@ public class Controllers {
         boolean x = opController.getXButton();
         double rightStick = opController.getRightX();
         double leftTrigger = opController.getLeftTriggerAxis();
+        boolean dpadUp = (((opController.getPOV() < 45) | (opController.getPOV()>315)) && opController.getPOV() != -1);
+        boolean dpadDown = (((opController.getPOV() > 135) | (opController.getPOV() < 225 )) && opController.getPOV() != -1);
 
         if (y) {
             shooterIdleIsActive = !shooterIdleIsActive;
@@ -95,7 +93,7 @@ public class Controllers {
         }
 
     }
-    public void listen(){
+    public static void listen(){
         systems.init();
         driveControllerBind();
         opControllerBind();
