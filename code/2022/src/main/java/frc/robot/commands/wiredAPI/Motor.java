@@ -142,7 +142,7 @@ public class Motor {
         } else if(motorType.equals("Spark")){
             sparkMotor = loadSpark(motorProp);
         } else if(motorType.equals("VictorSP")){ 
-            loadVictor(motorProp);
+            loadVictorSP(motorProp);
         }else {
             System.out.println("Motor type not found");
         }
@@ -233,10 +233,24 @@ public class Motor {
         }
     }
 
-    public VictorSP getBaseControllerObject(){
-        if(motorType == "VictorSP"){
+    public VictorSP getVictorSP(){
             return victorSPMotor;
-        }
+    }
+
+    public Spark getSpark(){
+            return sparkMotor;
+    }
+
+    public CANSparkMax getSparkMax(){
+            return sparkMaxMotor;
+    }
+
+    public TalonSRX getTalon(){
+            return talonMotor;
+    }
+
+    public VictorSPX getVictor(){
+            return victorMotor;
     }
 
 
