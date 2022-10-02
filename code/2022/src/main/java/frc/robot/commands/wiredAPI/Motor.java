@@ -183,38 +183,24 @@ public class Motor {
      */
     public void run(double speed){
         if (loaded == true){
-            switch(motorType){
-            case "TalonSRX":
-            {
+
+            if(motorType.equals("TalonSRX")){
                 talonMotor.set(ControlMode.PercentOutput, speed);
-                break;
-            }
-
-            case "VictorSPX":
-            {
+            } else if(motorType.equals("VictorSPX")){
                 victorMotor.set(ControlMode.PercentOutput, speed);
-                break;
+            } else if(motorType.equals("Falcon")){
+                falconMotor.set(ControlMode.PercentOutput, speed);
+            } else if(motorType == "CANSparkMax"){
+                sparkMaxMotor.set(speed);
+            } else if(motorType.equals("Spark")){
+                sparkMotor.set(speed);
+            } else if(motorType.equals("VictorSP")){
+                victorSPMotor.set(speed);
+            } else if (motorType.equals("TalonFX")){
+                falconMotor.set(ControlMode.PercentOutput, speed);
             }
 
-            case "Falcon": case "TalonFX":
-            {
-                falconMotor.set(ControlMode.PercentOutput, speed);
-                break;
-            }
-            case "SparkMax" :
-            {
-                sparkMaxMotor.set(speed);
-            }
-            case "Spark" :
-            {
-                sparkMotor.set(speed);
-            }
-            case "VictorSP" :
-            {
-                victorSPMotor.set(speed);
-            }
-            }
-        } else{
+        } else {
             System.out.println("Error: Motor not loaded");
         }
     }
