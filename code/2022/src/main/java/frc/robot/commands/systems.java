@@ -1,5 +1,8 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.commands.wiredAPI.Motor;
@@ -13,10 +16,10 @@ public class systems {
     //declare motor objects to make them accessible to other classes
     public static Motor ballLoad;
     public static Motor intake;
-    public static Motor leftDrive1;
-    public static Motor leftDrive2;
-    public static Motor rightDrive1;
-    public static Motor rightDrive2;
+    public static WPI_VictorSPX leftDrive1 = new WPI_VictorSPX(9);
+    public static WPI_VictorSPX leftDrive2 = new WPI_VictorSPX(13);
+    public static WPI_TalonSRX rightDrive1 = new WPI_TalonSRX(14);
+    public static WPI_TalonSRX rightDrive2 = new WPI_TalonSRX(15);
     public static Motor leftPulleyMotor1;
     public static Motor leftPulleyMotor2;
     public static Motor rightPulleyMotor1;
@@ -35,10 +38,6 @@ public class systems {
         Motor.setMotorConfigPath(filePath);
         ballLoad = new Motor("BallLoader");
         intake = new Motor("IntakeMotor");
-        leftDrive1 = new Motor("LeftDrive1");
-        leftDrive2 = new Motor("LeftDrive2");
-        rightDrive1 = new Motor("RightDrive1");
-        rightDrive2 = new Motor("RightDrive2");
         leftPulleyMotor1 = new Motor("LeftPulleyMotor1");
         leftPulleyMotor2 = new Motor("LeftPulleyMotor2");
         rightPulleyMotor1 = new Motor("RightPulleyMotor1");

@@ -1,6 +1,12 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.commands.systems;
 import frc.robot.commands.wiredAPI.Motor;
 
@@ -10,33 +16,37 @@ public class Controllers {
     static XboxController driveController = new XboxController(0);
     static XboxController opController = new XboxController(1);
     static int shooterTimer = 0;
-
+    static double xSpeed;
+    static double zRotation;
+    static MotorControllerGroup m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
+    static MotorControllerGroup m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
+    static DifferentialDrive drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
     private static void driveControllerBind(){
         //declare drive controller buttons
-        String mode = "normal";
+
         boolean rightBumper = driveController.getRightBumper();
         boolean leftBumper = driveController.getLeftBumper();
         boolean rightTrigger = driveController.getRightTriggerAxis() > 0.5;
         double leftStick = driveController.getLeftX();
         double rightStick = driveController.getRightY();
 
-        //double speedLeft = ;
-        //double speedRight = ;
 
         // set drive mode
         if (rightBumper){
-            mode = "speed";
+            xSpeed = leftStick;
+            zRotation = rightStick;
         } else if (leftBumper){
-            mode = "precision";
+            xSpeed = leftStick*0.3;
+            zRotation = rightStick*0.3;
         } else if (rightTrigger){
-            mode = "aim";
+            xSpeed = leftStick*0.3;
+            zRotation = rightStick*0.1;
         }  else {
-            mode = "normal";
+            xSpeed = leftStick*0.5;
+            zRotation = rightStick*0.5;
         }
 
-        //motor logic
-        
-        
+        drivetrain.arcadeDrive(xSpeed, zRotation);
 
 
     }
@@ -123,5 +133,6 @@ public class Controllers {
     public static void listen(){
         driveControllerBind();
         opControllerBind();
+        drivetrain.feed();
     }
 }
