@@ -96,7 +96,7 @@ public class Motor {
     private CANSparkMax loadSparkMax(Properties motorProp) {
         loaded = true;
         CANSparkMax CPM;
-        if (Boolean.valueOf( motorProp.getProperty("brushed") == "false")){
+        if (Boolean.valueOf( motorProp.getProperty("brushed"))){
             CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("motorPort")),MotorType.kBrushed);
         } else {
             CPM = new CANSparkMax( Integer.parseInt(motorProp.getProperty("motorPort")),MotorType.kBrushless);
@@ -137,12 +137,12 @@ public class Motor {
             falconMotor = loadFalcon(motorProp);
         } else if(motorType.equals("TalonFX")){
             falconMotor = loadFalcon(motorProp);
-        } else if(motorType.equals("CANSparkMax")) {
+        } else if(motorType.equals("SparkMax")) {
             sparkMaxMotor = loadSparkMax(motorProp);
         } else if(motorType.equals("Spark")){
             sparkMotor = loadSpark(motorProp);
         } else if(motorType.equals("VictorSP")){ 
-            loadVictor(motorProp);
+            loadVictorSP(motorProp);
         }else {
             System.out.println("Motor type not found");
         }
@@ -183,42 +183,24 @@ public class Motor {
      */
     public void run(double speed){
         if (loaded == true){
-            switch(motorType){
-            case "TalonSRX":
-            {
+
+            if(motorType.equals("TalonSRX")){
                 talonMotor.set(ControlMode.PercentOutput, speed);
-                break;
-            }
-
-            case "VictorSPX":
-            {
+            } else if(motorType.equals("VictorSPX")){
                 victorMotor.set(ControlMode.PercentOutput, speed);
-                break;
+            } else if(motorType.equals("Falcon")){
+                falconMotor.set(ControlMode.PercentOutput, speed);
+            } else if(motorType == "CANSparkMax"){
+                sparkMaxMotor.set(speed);
+            } else if(motorType.equals("Spark")){
+                sparkMotor.set(speed);
+            } else if(motorType.equals("VictorSP")){
+                victorSPMotor.set(speed);
+            } else if (motorType.equals("TalonFX")){
+                falconMotor.set(ControlMode.PercentOutput, speed);
             }
 
-            case "Falcon": case "TalonFX":
-            {
-                falconMotor.set(ControlMode.PercentOutput, speed);
-                break;
-            }
-            case "CANSparkMax" :
-            {
-                sparkMaxMotor.set(speed);
-            }
-            case "Spark" :
-            {
-                try{
-                    sparkMotor.set(speed);
-                } catch( NullPointerException e) {
-                    System.out.println("spark encounterd an error");
-                }
-            }
-            case "VictorSP" :
-            {
-                //victorSPMotor.set(speed);
-            }
-            }
-        } else{
+        } else {
             System.out.println("Error: Motor not loaded");
         }
     }
@@ -237,11 +219,24 @@ public class Motor {
         }
     }
 
-    public VictorSP getBaseControllerObject(){
-        if(motorType == "VictorSP"){
+    public VictorSP getVictorSP(){
             return victorSPMotor;
-        }
-        return victorSPMotor;
+    }
+
+    public Spark getSpark(){
+            return sparkMotor;
+    }
+
+    public CANSparkMax getSparkMax(){
+            return sparkMaxMotor;
+    }
+
+    public TalonSRX getTalon(){
+            return talonMotor;
+    }
+
+    public VictorSPX getVictor(){
+            return victorMotor;
     }
 
 
