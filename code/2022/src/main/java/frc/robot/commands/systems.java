@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.commands.wiredAPI.Motor;
 import frc.robot.subsystems.Pneumatics;
@@ -8,7 +9,7 @@ import frc.robot.subsystems.Pneumatics;
 
 public class systems {
     //declare path to motor configs
-    static String filePath = "src\\main\\java\\frc\\robot\\subsystems\\motorConfigs";
+    static String filePath = Filesystem.getDeployDirectory().getPath();
     //declare motor objects to make them accessible to other classes
     public static Motor ballLoad;
     public static Motor intake;
