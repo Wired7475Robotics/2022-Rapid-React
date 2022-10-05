@@ -16,7 +16,7 @@ import frc.robot.commands.wiredAPI.Motor;
 
 
 public class Controllers extends SubsystemBase{
-    //Declare Controller Objects
+    //Declare Controller and other common Objects
     static XboxController driveController = new XboxController(0);
     static XboxController opController = new XboxController(1);
     static int shooterTimer;
@@ -43,7 +43,7 @@ public class Controllers extends SubsystemBase{
         double rightStick = driveController.getRightY();
 
 
-        // set drive mode
+        //Drive Logic
         if (rightBumper){
             xSpeed = leftStick;
             zRotation = rightStick;
@@ -58,6 +58,7 @@ public class Controllers extends SubsystemBase{
             zRotation = rightStick*0.5;
         }
 
+        //Drive output
         System.out.println(xSpeed + ":" + zRotation);
         drivetrain.arcadeDrive(xSpeed, zRotation);
 
@@ -66,7 +67,6 @@ public class Controllers extends SubsystemBase{
     private static void opControllerBind(){
         //declare opController buttons
         boolean shooterIdleIsActive = false;
-        
         boolean y = opController.getYButton();
         boolean b = opController.getBButton();
         boolean a = opController.getAButton();
@@ -76,6 +76,8 @@ public class Controllers extends SubsystemBase{
         boolean dpadUp = (((opController.getPOV() < 45) | (opController.getPOV()>315)) && opController.getPOV() != -1);
         boolean dpadDown = (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
 
+        //Shooter Idle Logic
+        //TODO: Not Working
         if (y && shooterIdleIsActive == false && shooterTimer > 250) {
             shooterIdleIsActive = true;
             shooterTimer = 0;
@@ -89,7 +91,7 @@ public class Controllers extends SubsystemBase{
         System.out.println(shooterTimer + " /idle:" + shooterIdleIsActive);
 
 
-        
+        // Intake Logic
         if (b) {
             systems.intake.run(-0.25);
             System.out.println("intake");
@@ -97,6 +99,7 @@ public class Controllers extends SubsystemBase{
             systems.intake.run(0);
         }
         
+        //Shooter Logic
         if (a) {
             systems.shooter.run(1);
             System.out.println("shooter");
@@ -114,6 +117,7 @@ public class Controllers extends SubsystemBase{
             systems.ballLoad.run(0);
         }
 
+        //Lifts (MiniCIM) Logic
         if (rightStick > 0.1) {
             systems.leftLift.run(rightStick);
             systems.rightLift.run(rightStick);
@@ -126,12 +130,15 @@ public class Controllers extends SubsystemBase{
             systems.leftLift.run(0);
             systems.rightLift.run(0);
         }
+
+        //Pneumatics Logic
         if (leftTrigger > 0.1) {
             systems.liftPNU.set(true);
         } else {
             systems.liftPNU.set(false);
         }
 
+        //Pulley Logic
         if (dpadUp){
             systems.leftPulleyMotor1.run(0.25);
             systems.leftPulleyMotor2.run(-0.25);
@@ -153,6 +160,7 @@ public class Controllers extends SubsystemBase{
 
     }
     public static void listen(){
+        //Perform Button Bindings
         driveControllerBind();
         opControllerBind();
         drivetrain.feed();
