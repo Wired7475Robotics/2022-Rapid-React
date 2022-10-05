@@ -25,6 +25,8 @@ public class Controllers extends SubsystemBase{
     static MotorControllerGroup m_leftDrive;
     static MotorControllerGroup m_rightDrive;
     static DifferentialDrive drivetrain;
+    private static boolean shooterIdleIsActive = false;
+    private static double DEADZONE = 0.05;
     public Controllers() {
         driveController = new XboxController(0);
         opController = new XboxController(1);
@@ -32,6 +34,7 @@ public class Controllers extends SubsystemBase{
         m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
         m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
         drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
+        shooterTimer = 0;
     }
     private static void driveControllerBind(){
         //declare drive controller buttons
@@ -44,6 +47,8 @@ public class Controllers extends SubsystemBase{
 
 
         //Drive Logic
+        leftStick = (leftStick < DEADZONE) ? 0 : leftStick;
+        rightStick = (rightStick < DEADZONE) ? 0 : rightStick;        
         if (rightBumper){
             xSpeed = leftStick;
             zRotation = rightStick;
@@ -66,7 +71,6 @@ public class Controllers extends SubsystemBase{
     }
     private static void opControllerBind(){
         //declare opController buttons
-        boolean shooterIdleIsActive = false;
         boolean y = opController.getYButton();
         boolean b = opController.getBButton();
         boolean a = opController.getAButton();
@@ -77,24 +81,19 @@ public class Controllers extends SubsystemBase{
         boolean dpadDown = (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
 
         //Shooter Idle Logic
-        //TODO: Not Working
-        if (y && shooterIdleIsActive == false && shooterTimer > 250) {
+        if (y && shooterIdleIsActive == false && shooterTimer > 50) {
             shooterIdleIsActive = true;
             shooterTimer = 0;
-        } else if (y && shooterIdleIsActive && shooterTimer > 250){
+        } else if (y && shooterIdleIsActive && shooterTimer > 50){
             shooterIdleIsActive = false;
             shooterTimer = 0;
         } else {
             shooterTimer++;
         }
 
-        System.out.println(shooterTimer + " /idle:" + shooterIdleIsActive);
-
-
         // Intake Logic
         if (b) {
             systems.intake.run(-0.25);
-            System.out.println("intake");
         } else {
             systems.intake.run(0);
         }
@@ -102,17 +101,14 @@ public class Controllers extends SubsystemBase{
         //Shooter Logic
         if (a) {
             systems.shooter.run(1);
-            System.out.println("shooter");
         } else if (shooterIdleIsActive) {
-            systems.shooter.run(0.05);
-            System.out.println("idle");
+            systems.shooter.run(0.15);
         } else {
             systems.shooter.run(0);
         }
 
         if (x) {
             systems.ballLoad.run(0.5);
-            System.out.println("load");
         } else {
             systems.ballLoad.run(0);
         }
@@ -121,11 +117,9 @@ public class Controllers extends SubsystemBase{
         if (rightStick > 0.1) {
             systems.leftLift.run(rightStick);
             systems.rightLift.run(rightStick);
-            System.out.println(rightStick + ": Lifts");
         } else if (rightStick < -0.1) {
             systems.leftLift.run(rightStick);
             systems.rightLift.run(rightStick);
-            System.out.println(rightStick + ": Lifts");
         } else {
             systems.leftLift.run(0);
             systems.rightLift.run(0);
@@ -144,13 +138,11 @@ public class Controllers extends SubsystemBase{
             systems.leftPulleyMotor2.run(-0.25);
             systems.rightPulleyMotor1.run(-0.25);
             systems.rightPulleyMotor2.run(-0.25);
-            System.out.println("Pulley");
         } else if(dpadDown) {
             systems.leftPulleyMotor1.run(-0.25);
             systems.leftPulleyMotor2.run(0.25);
             systems.rightPulleyMotor1.run(0.25);
             systems.rightPulleyMotor2.run(0.25);
-            System.out.println("Pulley");
         } else {
             systems.leftPulleyMotor1.run(0);
             systems.leftPulleyMotor2.run(0);
@@ -164,6 +156,5 @@ public class Controllers extends SubsystemBase{
         driveControllerBind();
         opControllerBind();
         drivetrain.feed();
-        System.out.println("Updating controllers!");
     }
 }

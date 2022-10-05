@@ -183,14 +183,13 @@ public class Motor {
      */
     public void run(double speed){
         if (loaded == true){
-
             if(motorType.equals("TalonSRX")){
                 talonMotor.set(ControlMode.PercentOutput, speed);
             } else if(motorType.equals("VictorSPX")){
                 victorMotor.set(ControlMode.PercentOutput, speed);
             } else if(motorType.equals("Falcon")){
                 falconMotor.set(ControlMode.PercentOutput, speed);
-            } else if(motorType == "CANSparkMax"){
+            } else if(motorType.equals("CANSparkMax")){
                 sparkMaxMotor.set(speed);
             } else if(motorType.equals("Spark")){
                 sparkMotor.set(speed);
