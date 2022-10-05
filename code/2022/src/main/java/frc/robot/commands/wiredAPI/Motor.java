@@ -54,7 +54,7 @@ public class Motor {
         if (filePath.equals("")) {
             System.out.println("Error: filePath not set");
         }else{
-        loadMotor(motorName);
+            loadMotor(motorName);
         }
     }
     /**
@@ -137,7 +137,7 @@ public class Motor {
             falconMotor = loadFalcon(motorProp);
         } else if(motorType.equals("TalonFX")){
             falconMotor = loadFalcon(motorProp);
-        } else if(motorType.equals("SparkMax")) {
+        } else if(motorType.equals("CANSparkMax")) {
             sparkMaxMotor = loadSparkMax(motorProp);
         } else if(motorType.equals("Spark")){
             sparkMotor = loadSpark(motorProp);

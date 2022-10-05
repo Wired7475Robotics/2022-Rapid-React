@@ -3,24 +3,30 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.ControllersCommand;
 import frc.robot.commands.systems;
 import frc.robot.commands.wiredAPI.Motor;
 
 
-public class Controllers {
+public class Controllers extends SubsystemBase{
     //Declare Controller Objects
-    static XboxController driveController = new XboxController(0);
-    static XboxController opController = new XboxController(1);
-    static int shooterTimer = 0;
-    static double xSpeed;
-    static double zRotation;
-    static MotorControllerGroup m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
-    static MotorControllerGroup m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
-    static DifferentialDrive drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
+    public Controllers() {
+        static XboxController driveController = new XboxController(0);
+        static XboxController opController = new XboxController(1);
+        static int shooterTimer = 0;
+        static double xSpeed;
+        static double zRotation;
+        static MotorControllerGroup m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
+        static MotorControllerGroup m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
+        static DifferentialDrive drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
+    }
     private static void driveControllerBind(){
         //declare drive controller buttons
 
@@ -46,6 +52,7 @@ public class Controllers {
             zRotation = rightStick*0.5;
         }
 
+        System.out.println(xSpeed + ":" + zRotation);
         drivetrain.arcadeDrive(xSpeed, zRotation);
 
 
@@ -63,10 +70,10 @@ public class Controllers {
         boolean dpadUp = (((opController.getPOV() < 45) | (opController.getPOV()>315)) && opController.getPOV() != -1);
         boolean dpadDown = (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
 
-        if (y && shooterIdleIsActive == false && shooterTimer > 100) {
+        if (y && shooterIdleIsActive == false && shooterTimer > 250) {
             shooterIdleIsActive = true;
             shooterTimer = 0;
-        } else if (y && shooterIdleIsActive && shooterTimer > 100){
+        } else if (y && shooterIdleIsActive && shooterTimer > 250){
             shooterIdleIsActive = false;
             shooterTimer = 0;
         } else {
@@ -96,16 +103,15 @@ public class Controllers {
         }
 
         if (rightStick > 0.1) {
-            //systems.leftLift.run(rightStick);
-            //systems.rightLift.run(rightStick);
+            systems.leftLift.run(rightStick);
+            systems.rightLift.run(rightStick);
         } else if (rightStick < -0.1) {
-            //systems.leftLift.run(rightStick);
-            //systems.rightLift.run(rightStick);
+            systems.leftLift.run(rightStick);
+            systems.rightLift.run(rightStick);
         } else {
             systems.leftLift.run(0);
             systems.rightLift.run(0);
         }
-
         if (leftTrigger > 0.1) {
             systems.liftPNU.set(true);
         } else {
@@ -134,5 +140,11 @@ public class Controllers {
         driveControllerBind();
         opControllerBind();
         drivetrain.feed();
+        System.out.println("Updating controllers!");
+    }
+
+    @Override
+    public void setDefaultCommand(Command command) {
+        super.setDefaultCommand(new ControllersCommand());
     }
 }
