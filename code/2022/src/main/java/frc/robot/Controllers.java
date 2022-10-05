@@ -17,15 +17,21 @@ import frc.robot.commands.wiredAPI.Motor;
 
 public class Controllers extends SubsystemBase{
     //Declare Controller Objects
+    static XboxController driveController = new XboxController(0);
+    static XboxController opController = new XboxController(1);
+    static int shooterTimer;
+    static double xSpeed;
+    static double zRotation;
+    static MotorControllerGroup m_leftDrive;
+    static MotorControllerGroup m_rightDrive;
+    static DifferentialDrive drivetrain;
     public Controllers() {
-        static XboxController driveController = new XboxController(0);
-        static XboxController opController = new XboxController(1);
-        static int shooterTimer = 0;
-        static double xSpeed;
-        static double zRotation;
-        static MotorControllerGroup m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
-        static MotorControllerGroup m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
-        static DifferentialDrive drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
+        driveController = new XboxController(0);
+        opController = new XboxController(1);
+        shooterTimer = 0;
+        m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
+        m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
+        drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
     }
     private static void driveControllerBind(){
         //declare drive controller buttons
@@ -80,24 +86,30 @@ public class Controllers extends SubsystemBase{
             shooterTimer++;
         }
 
+        System.out.println(shooterTimer + " /idle:" + shooterIdleIsActive);
+
 
         
         if (b) {
             systems.intake.run(-0.25);
+            System.out.println("intake");
         } else {
             systems.intake.run(0);
         }
         
         if (a) {
             systems.shooter.run(1);
+            System.out.println("shooter");
         } else if (shooterIdleIsActive) {
             systems.shooter.run(0.05);
+            System.out.println("idle");
         } else {
             systems.shooter.run(0);
         }
 
         if (x) {
             systems.ballLoad.run(0.5);
+            System.out.println("load");
         } else {
             systems.ballLoad.run(0);
         }
@@ -105,9 +117,11 @@ public class Controllers extends SubsystemBase{
         if (rightStick > 0.1) {
             systems.leftLift.run(rightStick);
             systems.rightLift.run(rightStick);
+            System.out.println(rightStick + ": Lifts");
         } else if (rightStick < -0.1) {
             systems.leftLift.run(rightStick);
             systems.rightLift.run(rightStick);
+            System.out.println(rightStick + ": Lifts");
         } else {
             systems.leftLift.run(0);
             systems.rightLift.run(0);
@@ -123,11 +137,13 @@ public class Controllers extends SubsystemBase{
             systems.leftPulleyMotor2.run(-0.25);
             systems.rightPulleyMotor1.run(-0.25);
             systems.rightPulleyMotor2.run(-0.25);
+            System.out.println("Pulley");
         } else if(dpadDown) {
             systems.leftPulleyMotor1.run(-0.25);
             systems.leftPulleyMotor2.run(0.25);
             systems.rightPulleyMotor1.run(0.25);
             systems.rightPulleyMotor2.run(0.25);
+            System.out.println("Pulley");
         } else {
             systems.leftPulleyMotor1.run(0);
             systems.leftPulleyMotor2.run(0);

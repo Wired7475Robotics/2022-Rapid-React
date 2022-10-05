@@ -1,28 +1,31 @@
 package frc;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class ControllersCommand extends Command{
+public class ControllersCommand extends CommandBase{
     public ControllersCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.controllers);
+        addRequirements(Robot.controllers);
+        System.out.println("controllercommandinit");
       }
     
       // Called just before this Command runs the first time
       @Override
-      protected void initialize() {
+      public void initialize() {
       }
     
       // Called repeatedly when this Command is scheduled to run
       @Override
-      protected void execute() {
+      public void execute() {
         Robot.controllers.listen();
+        System.out.println("listening to controllers");
       }
     
       // Make this return true when this Command no longer needs to run execute()
       @Override
-      protected boolean isFinished() {
+      public boolean isFinished() {
         return false;
       }
     
