@@ -7,8 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Controllers;
 import frc.robot.commands.systems;
+import frc.robot.ControllersCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -34,6 +36,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     systems.init();
     controllers = new Controllers();
+    controllers.setDefaultCommand(new ControllersCommand());
   }
 
   /**
@@ -84,7 +87,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    Controllers.listen();
+    CommandScheduler.getInstance().run();
   }
   /** This function is called once when the robot is disabled. */
   @Override

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.ControllersCommand;
+import frc.robot.ControllersCommand;
 import frc.robot.commands.systems;
 import frc.robot.commands.wiredAPI.Motor;
 
@@ -165,10 +165,5 @@ public class Controllers extends SubsystemBase{
         opControllerBind();
         drivetrain.feed();
         System.out.println("Updating controllers!");
-    }
-
-    @Override
-    public void setDefaultCommand(Command command) {
-        super.setDefaultCommand(new ControllersCommand());
     }
 }
