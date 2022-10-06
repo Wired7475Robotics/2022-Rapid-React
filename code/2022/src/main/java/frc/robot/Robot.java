@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Controllers;
+import frc.robot.commands.TankDrive;
 import frc.robot.commands.systems;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.ControllersCommand;
 
 /**
@@ -22,6 +24,7 @@ public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
   public static Controllers controllers;
+  public static DriveTrain drivetrain;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -37,6 +40,8 @@ public class Robot extends TimedRobot {
     systems.init();
     controllers = new Controllers();
     controllers.setDefaultCommand(new ControllersCommand());
+    drivetrain = new DriveTrain();
+    drivetrain.setDefaultCommand(new TankDrive());
   }
 
   /**

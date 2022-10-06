@@ -17,56 +17,15 @@ import frc.robot.commands.wiredAPI.Motor;
 
 public class Controllers extends SubsystemBase{
     //Declare Controller and other common Objects
-    static XboxController driveController = new XboxController(0);
-    static XboxController opController = new XboxController(1);
     static int shooterTimer;
     static double xSpeed;
     static double zRotation;
-    static MotorControllerGroup m_leftDrive;
-    static MotorControllerGroup m_rightDrive;
-    static DifferentialDrive drivetrain;
     private static boolean shooterIdleIsActive = false;
-    private static double DEADZONE = 0.05;
+
     public Controllers() {
-        driveController = new XboxController(0);
-        opController = new XboxController(1);
-        shooterTimer = 0;
-        m_leftDrive = new MotorControllerGroup(systems.leftDrive1,systems.leftDrive2);
-        m_rightDrive = new MotorControllerGroup(systems.rightDrive1, systems.rightDrive2);
-        drivetrain = new DifferentialDrive(m_leftDrive,m_rightDrive);
         shooterTimer = 0;
     }
     private static void driveControllerBind(){
-        //declare drive controller buttons
-
-        boolean rightBumper = driveController.getRightBumper();
-        boolean leftBumper = driveController.getLeftBumper();
-        boolean rightTrigger = driveController.getRightTriggerAxis() > 0.5;
-        double leftStick = driveController.getLeftX();
-        double rightStick = driveController.getRightY();
-
-
-        //Drive Logic
-        leftStick = (leftStick < DEADZONE) ? 0 : leftStick;
-        rightStick = (rightStick < DEADZONE) ? 0 : rightStick;        
-        if (rightBumper){
-            xSpeed = leftStick;
-            zRotation = rightStick;
-        } else if (leftBumper){
-            xSpeed = leftStick*0.3;
-            zRotation = rightStick*0.3;
-        } else if (rightTrigger){
-            xSpeed = leftStick*0.3;
-            zRotation = rightStick*0.1;
-        }  else {
-            xSpeed = leftStick*0.5;
-            zRotation = rightStick*0.5;
-        }
-
-        //Drive output
-        System.out.println(xSpeed + ":" + zRotation);
-        drivetrain.arcadeDrive(xSpeed, zRotation);
-
 
     }
     private static void opControllerBind(){
@@ -155,6 +114,5 @@ public class Controllers extends SubsystemBase{
         //Perform Button Bindings
         driveControllerBind();
         opControllerBind();
-        drivetrain.feed();
     }
 }
