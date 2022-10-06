@@ -3,9 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class TankDrive extends CommandBase {
+public class ArcadeDrive extends CommandBase {
     
-    public TankDrive() {
+    public ArcadeDrive() {
         addRequirements(Robot.drivetrain);
     }
       // Called just before this Command runs the first time
