@@ -27,10 +27,7 @@ public class Controllers extends SubsystemBase{
     private static void opControllerBind(){
         //declare opController buttons
         
-        double rightStick = opController.getRightX();
-        double leftTrigger = opController.getLeftTriggerAxis();
-        boolean dpadUp = (((opController.getPOV() < 45) | (opController.getPOV()>315)) && opController.getPOV() != -1);
-        boolean dpadDown = (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
+       
 
 
         //Lifts (MiniCIM) Logic

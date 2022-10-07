@@ -8,15 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.ArcadeDrive;
-import frc.robot.commands.PneumaticLifts;
-import frc.robot.commands.RunIntake;
-import frc.robot.commands.Shoot;
-import frc.robot.commands.systems;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Pneumatics;
-import frc.robot.subsystems.Shooter;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -31,7 +24,8 @@ public class Robot extends TimedRobot {
   public static DriveTrain drivetrain;
   public static Shooter shooter;
   public static Intake intake;
-  public static Pneumatics lifts;
+  public static Pneumatics PnuLifts;
+  public static Lifts lifts;
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
@@ -46,13 +40,15 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     systems.init();
     drivetrain = new DriveTrain();
-    drivetrain.setDefaultCommand(new ArcadeDrive());
+    drivetrain.setDefaultCommand( new ArcadeDrive());
     shooter = new Shooter();
-    shooter.setDefaultCommand(new Shoot());
+    shooter.setDefaultCommand( new Shoot());
     intake = new Intake();
-    intake.setDefaultCommand(new RunIntake());
-    lifts = new Pneumatics();
-    lifts.setDefaultCommand(new PneumaticLifts());
+    intake.setDefaultCommand( new RunIntake());
+    PnuLifts = new Pneumatics();
+    PnuLifts.setDefaultCommand( new PneumaticLifts());
+    lifts = new Lifts();
+    lifts.setDefaultCommand( new runLifts());
   }
 
   /**

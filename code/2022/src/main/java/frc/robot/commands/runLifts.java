@@ -3,10 +3,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 
-public class PneumaticLifts extends CommandBase{
-    
-    public PneumaticLifts() {
-        addRequirements(Robot.PnuLifts);
+public class runLifts extends CommandBase {
+    public runLifts(){
+        addRequirements(Robot.lifts);
     }
 
     @Override
@@ -16,7 +15,7 @@ public class PneumaticLifts extends CommandBase{
 
     @Override
     public void execute() {
-        Robot.PnuLifts.teleLift();
+        Robot.lifts.teleLifts();
     }
 
     @Override
