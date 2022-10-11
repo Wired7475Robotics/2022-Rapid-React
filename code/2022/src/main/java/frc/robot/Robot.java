@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
-import frc.robot.commands.wiredAPI.Motor;
 import frc.robot.subsystems.*;
 
 /**
@@ -32,7 +31,7 @@ public class Robot extends TimedRobot {
   public static Pneumatics PnuLifts;
   public static Lifts lifts;
   private String m_autoSelected;
-  private static String filepath = Filesystem.getDeployDirectory().toString();
+  public static OI oi;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   /**
@@ -41,10 +40,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    Motor.setMotorConfigPath(filepath);
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    oi = new OI();
     drivetrain = new DriveTrain();
     drivetrain.setDefaultCommand( new ArcadeDrive());
     shooter = new Shooter();
