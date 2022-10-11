@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import java.io.File;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.*;
+import frc.robot.commands.wiredAPI.Motor;
 import frc.robot.subsystems.*;
 
 /**
@@ -20,13 +26,13 @@ import frc.robot.subsystems.*;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  public static Controllers controllers;
   public static DriveTrain drivetrain;
   public static Shooter shooter;
   public static Intake intake;
   public static Pneumatics PnuLifts;
   public static Lifts lifts;
   private String m_autoSelected;
+  private static String filepath = Filesystem.getDeployDirectory().toString();
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
   /**
@@ -35,6 +41,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    Motor.setMotorConfigPath(filepath);
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);

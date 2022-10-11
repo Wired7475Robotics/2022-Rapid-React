@@ -6,7 +6,8 @@ import frc.robot.Robot;
 public class RunIntake extends CommandBase{
 
     public RunIntake() {
-        addRequirements(Robot.intake);        
+        addRequirements(Robot.intake);
+            
     }
 
     @Override
