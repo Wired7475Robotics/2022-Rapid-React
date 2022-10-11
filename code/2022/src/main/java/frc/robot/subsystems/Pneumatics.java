@@ -12,7 +12,7 @@ public class Pneumatics extends SubsystemBase{
     boolean enabled;
     boolean pSwitch;
     double current;
-    public static Solenoid Lifts = new Solenoid(PneumaticsModuleType.REVPH , 15 );
+    Solenoid Lifts;
     public Pneumatics() {
         compressor = new Compressor(1, PneumaticsModuleType.REVPH);
         enabled = compressor.enabled();
