@@ -35,15 +35,15 @@ public class Lifts extends SubsystemBase {
         }
 
         if (OI.getOpDpad(OI.UP)){
-            leftPulleyMotor1.run(0.25);
-            leftPulleyMotor2.run(-0.25);
-            rightPulleyMotor1.run(-0.25);
-            rightPulleyMotor2.run(-0.25);
+            leftPulleyMotor1.run(1);
+            leftPulleyMotor2.run(-1);
+            rightPulleyMotor1.run(-1);
+            rightPulleyMotor2.run(-1);
         } else if(OI.getOpDpad(OI.DOWN)) {
-            leftPulleyMotor1.run(-0.25);
-            leftPulleyMotor2.run(0.25);
-            rightPulleyMotor1.run(0.25);
-            rightPulleyMotor2.run(0.25);
+            leftPulleyMotor1.run(-1);
+            leftPulleyMotor2.run(1);
+            rightPulleyMotor1.run(1);
+            rightPulleyMotor2.run(1);
         } else {
             leftPulleyMotor1.run(0);
             leftPulleyMotor2.run(0);

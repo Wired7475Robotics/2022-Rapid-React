@@ -19,7 +19,7 @@ public class Shooter extends SubsystemBase {
 
     private boolean IdleTimer() {
         if(idleTimer > idleCooldown)
-            return true;
+            return false;
          else 
             idleTimer++;
             return false;
