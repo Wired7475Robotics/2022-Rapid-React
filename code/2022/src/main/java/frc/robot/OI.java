@@ -15,6 +15,8 @@ public class OI {
     public static int LEFT = 1;
     public static int UP = 2;
     public static int DOWN = 3;
+    public static int X = 4;
+    public static int Y = 5;
 
     public OI() {
         Motor.setMotorConfigPath(filePath);
@@ -58,21 +60,41 @@ public class OI {
             return false;
     }
 
-    public static double getDriveLeftStick() {
-        return (driveController.getLeftY() < DEADZONE) ? 0 : driveController.getLeftX(); 
+    public static double getDriveLeftStick(int axis) {
+        if( axis == Y )
+            return (driveController.getRightY() > DEADZONE || driveController.getLeftY() < -DEADZONE) ? 0 : driveController.getLeftY();
+        else if ( axis == X)
+            return (driveController.getLeftX() > DEADZONE || driveController.getLeftX() > -DEADZONE) ? 0 : driveController.getRightX();
+        else 
+            return 0;
     }
 
 
-    public static double getDriveRightStick() {
-        return (driveController.getRightX() < DEADZONE) ? 0 : driveController.getRightY(); 
+    public static double getDriveRightStick(int axis) {
+        if( axis == Y )
+        return (driveController.getRightY() > DEADZONE || driveController.getRightY() < -DEADZONE) ? driveController.getRightY() : 0 ;
+    else if ( axis == X)
+        return (driveController.getRightX() > DEADZONE || driveController.getRightX() < -DEADZONE) ? driveController.getRightX() : 0 ;
+    else 
+        return 0;
     }
 
-    public static double getOpLeftStick() {
-        return (opController.getLeftX() < DEADZONE) ? 0 : opController.getLeftX(); 
+    public static double getOpLeftStick(int axis) {
+        if( axis == Y )
+            return (opController.getLeftY() > DEADZONE || opController.getLeftY() < -DEADZONE) ? opController.getLeftY() : 0 ;
+        else if ( axis == X)
+            return (opController.getLeftX() > DEADZONE || opController.getLeftX() < -DEADZONE) ?  opController.getLeftX() : 0 ;
+        else 
+            return 0;
     }
 
-    public static double getOpRightStick() {
-        return (opController.getRightY() < DEADZONE) ? 0 : opController.getRightY(); 
+    public static double getOpRightStick(int axis) {
+        if( axis == Y )
+            return (opController.getRightY() > DEADZONE || opController.getRightY() < -DEADZONE) ? opController.getRightY() : 0 ;
+        else if ( axis == X)
+            return (opController.getRightX() > DEADZONE || opController.getRightX() < -DEADZONE) ? opController.getRightX() : 0 ;
+        else 
+            return 0;
     } 
 
     public static boolean getOpX(){
@@ -113,7 +135,7 @@ public class OI {
         else if(direction == 1)
             return (((opController.getPOV() < 315) && (opController.getPOV() > 225 )) && opController.getPOV() != -1);
         else if(direction == 2)
-            return (((opController.getPOV() < 45) | (opController.getPOV()>315)) && opController.getPOV() != -1);
+            return (((opController.getPOV() < 45) || (opController.getPOV()>315)) && opController.getPOV() != -1);
         else if(direction == 3)
             return (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
         else{

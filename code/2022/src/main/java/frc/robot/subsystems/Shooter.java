@@ -19,7 +19,7 @@ public class Shooter extends SubsystemBase {
 
     private boolean IdleTimer() {
         if(idleTimer > idleCooldown)
-            return false;
+            return true;
          else 
             idleTimer++;
             return false;
@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase {
     public void idle() {
         if(OI.getOpY() && !shooterIdleIsActive && IdleTimer()){
             shooterIdleIsActive = true;
-        } else if (OI.getOpY() && shooterIdleIsActive && !IdleTimer()) {
+        } else if (OI.getOpY() && shooterIdleIsActive && IdleTimer()) {
             shooterIdleIsActive = false;
         }
     }

@@ -23,33 +23,22 @@ public class Lifts extends SubsystemBase {
     }
 
     public void teleLifts() {
-        if (OI.getOpRightStick() > 0.1) {
-            leftLift.run(OI.getOpRightStick());
-            rightLift.run(OI.getOpRightStick());
-        } else if (OI.getOpRightStick() < -0.1) {
-            leftLift.run(OI.getOpRightStick());
-            rightLift.run(OI.getOpRightStick());
+        if (OI.getOpDpad(OI.UP)) {
+            leftLift.run(1);
+            rightLift.run(1);
+        } else if (OI.getOpDpad(OI.DOWN)) {
+            leftLift.run(-1);
+            rightLift.run(-1);
         } else {
             leftLift.run(0);
             rightLift.run(0);
         }
 
-        if (OI.getOpDpad(OI.UP)){
-            leftPulleyMotor1.run(1);
-            leftPulleyMotor2.run(-1);
-            rightPulleyMotor1.run(-1);
-            rightPulleyMotor2.run(-1);
-        } else if(OI.getOpDpad(OI.DOWN)) {
-            leftPulleyMotor1.run(-1);
-            leftPulleyMotor2.run(1);
-            rightPulleyMotor1.run(1);
-            rightPulleyMotor2.run(1);
-        } else {
-            leftPulleyMotor1.run(0);
-            leftPulleyMotor2.run(0);
-            rightPulleyMotor1.run(0);
-            rightPulleyMotor2.run(0);
-        }
+
+        leftPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
+        leftPulleyMotor2.run(-OI.getOpLeftStick(OI.Y));
+        rightPulleyMotor1.run(OI.getOpRightStick(OI.Y));
+        rightPulleyMotor2.run(OI.getOpRightStick(OI.Y));
     }
 
 }
