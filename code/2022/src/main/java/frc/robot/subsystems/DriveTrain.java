@@ -20,7 +20,7 @@ public class DriveTrain extends SubsystemBase{
     private static DifferentialDrive drivetrain;
     private static double MED_SPEED_COEFF = 0.6;
     private static double LOW_SPEED_COEFF = 0.4;
-    private static double HIGH_SPEED_COEFF = 0.75;
+    private static double HIGH_SPEED_COEFF = 0.7;
 
     public DriveTrain() {
         leftDrive1 = new WPI_VictorSPX(9);
@@ -35,19 +35,21 @@ public class DriveTrain extends SubsystemBase{
 
     public void teleDrive() {
         if (OI.getDriveBumper(OI.RIGHT)){
-            xSpeed = OI.getDriveRightStick(OI.Y);
-            zRotation = OI.getDriveLeftStick(OI.X);
+            xSpeed = OI.getDriveRightStick(OI.X);
+            zRotation = OI.getDriveLeftStick(OI.Y);
         } else if (OI.getDriveBumper(OI.LEFT)){
-            xSpeed = OI.getDriveRightStick(OI.Y) * MED_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.X) * MED_SPEED_COEFF;
+            xSpeed = OI.getDriveRightStick(OI.X) * MED_SPEED_COEFF;
+            zRotation = OI.getDriveLeftStick(OI.Y) * MED_SPEED_COEFF;
         } else if (OI.getDriveTrigger(OI.RIGHT)){
-            xSpeed = OI.getDriveRightStick(OI.Y) *MED_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.X) * LOW_SPEED_COEFF;
+            xSpeed = OI.getDriveRightStick(OI.X) *MED_SPEED_COEFF;
+            zRotation = OI.getDriveLeftStick(OI.Y) * LOW_SPEED_COEFF;
         }  else {
-            xSpeed = OI.getDriveRightStick(OI.Y) * HIGH_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.X) * HIGH_SPEED_COEFF;
+            xSpeed = OI.getDriveRightStick(OI.X) * HIGH_SPEED_COEFF;
+            zRotation = OI.getDriveLeftStick(OI.Y) * HIGH_SPEED_COEFF;
         }
-        drivetrain.arcadeDrive(-xSpeed, zRotation);
+
+
+        drivetrain.arcadeDrive(xSpeed, zRotation);
         drivetrain.feed();
     }
 }

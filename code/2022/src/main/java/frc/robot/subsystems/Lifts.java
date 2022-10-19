@@ -37,8 +37,8 @@ public class Lifts extends SubsystemBase {
 
         leftPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
         leftPulleyMotor2.run(-OI.getOpLeftStick(OI.Y));
-        rightPulleyMotor1.run(OI.getOpRightStick(OI.Y));
-        rightPulleyMotor2.run(OI.getOpRightStick(OI.Y));
+        rightPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
+        rightPulleyMotor2.run(OI.getOpLeftStick(OI.Y));
     }
 
 }

@@ -62,9 +62,9 @@ public class OI {
 
     public static double getDriveLeftStick(int axis) {
         if( axis == Y )
-            return (driveController.getRightY() > DEADZONE || driveController.getLeftY() < -DEADZONE) ? 0 : driveController.getLeftY();
+            return (driveController.getLeftY() > DEADZONE || driveController.getLeftY() < -DEADZONE) ? driveController.getLeftY() : 0 ;
         else if ( axis == X)
-            return (driveController.getLeftX() > DEADZONE || driveController.getLeftX() > -DEADZONE) ? 0 : driveController.getRightX();
+            return (driveController.getLeftX() > DEADZONE || driveController.getLeftX() < -DEADZONE) ? driveController.getLeftX() : 0 ;
         else 
             return 0;
     }
@@ -72,11 +72,11 @@ public class OI {
 
     public static double getDriveRightStick(int axis) {
         if( axis == Y )
-        return (driveController.getRightY() > DEADZONE || driveController.getRightY() < -DEADZONE) ? driveController.getRightY() : 0 ;
-    else if ( axis == X)
-        return (driveController.getRightX() > DEADZONE || driveController.getRightX() < -DEADZONE) ? driveController.getRightX() : 0 ;
-    else 
-        return 0;
+            return (driveController.getRightY() > DEADZONE || driveController.getRightY() < -DEADZONE) ? driveController.getRightY() : 0 ;
+        else if ( axis == X)
+            return (driveController.getRightX() > DEADZONE || driveController.getRightX() < -DEADZONE) ? driveController.getRightX() : 0 ;
+        else 
+            return 0;
     }
 
     public static double getOpLeftStick(int axis) {
@@ -138,6 +138,19 @@ public class OI {
             return (((opController.getPOV() < 45) || (opController.getPOV()>315)) && opController.getPOV() != -1);
         else if(direction == 3)
             return (((opController.getPOV() > 135) && (opController.getPOV() < 225 )) && opController.getPOV() != -1);
+        else{
+            return false;
+        }    
+    }
+    public static boolean getDriveDpad(int direction) {
+        if (direction == 0)
+            return  (((driveController.getPOV() < 135) && (driveController.getPOV() < 45 )) && driveController.getPOV() != -1);
+        else if(direction == 1)
+            return (((driveController.getPOV() < 315) && (driveController.getPOV() > 225 )) && driveController.getPOV() != -1);
+        else if(direction == 2)
+            return (((driveController.getPOV() < 45) || (driveController.getPOV()>315)) && driveController.getPOV() != -1);
+        else if(direction == 3)
+            return (((driveController.getPOV() > 135) && (driveController.getPOV() < 225 )) && driveController.getPOV() != -1);
         else{
             return false;
         }    
