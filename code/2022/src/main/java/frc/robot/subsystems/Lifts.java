@@ -12,6 +12,7 @@ public class Lifts extends SubsystemBase {
     public static Motor rightPulleyMotor2;
     public static Motor leftLift;
     public static Motor rightLift;
+    private static double Idle;
 
     public Lifts(){
         leftPulleyMotor1 = new Motor("LeftPulleyMotor1");
@@ -20,6 +21,7 @@ public class Lifts extends SubsystemBase {
         rightPulleyMotor2 = new Motor("RightPulleyMotor2");
         leftLift = new Motor("LeftLiftMotor");
         rightLift = new Motor("RightLiftMotor");
+        Idle = 0.1;
     }
 
     public void teleLifts() {
@@ -33,12 +35,25 @@ public class Lifts extends SubsystemBase {
             leftLift.run(0);
             rightLift.run(0);
         }
+        if(OI.getOpLeftStick(OI.Y) != 0){
+            leftPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
+            leftPulleyMotor2.run(-OI.getOpLeftStick(OI.Y));
+            rightPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
+            rightPulleyMotor2.run(OI.getOpLeftStick(OI.Y));
+        } else if (OI.getOpY()){
+            leftPulleyMotor1.run(Idle);
+            leftPulleyMotor2.run(-Idle);
+            rightPulleyMotor1.run(Idle);
+            rightPulleyMotor2.run(Idle);
+        } else {
+            leftPulleyMotor1.run(0);
+            leftPulleyMotor2.run(0);
+            rightPulleyMotor1.run(0);
+            rightPulleyMotor2.run(0);  
+        }
 
 
-        leftPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
-        leftPulleyMotor2.run(-OI.getOpLeftStick(OI.Y));
-        rightPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
-        rightPulleyMotor2.run(OI.getOpLeftStick(OI.Y));
+
     } 
 
 }
