@@ -8,11 +8,18 @@ import java.io.File;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -30,9 +37,16 @@ public class Robot extends TimedRobot {
   public static Intake intake;
   public static Pneumatics PnuLifts;
   public static Lifts lifts;
+  public static Encoder leftEncoder;
+  public static Encoder rightEncoder;
+  public static ShuffleboardTab autoTab;
+  NetworkTableEntry leftEncoderData;
+  NetworkTableEntry rightEncoderData;
+  public static Timer timer;
   private String m_autoSelected;
   public static OI oi;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private SequentialCommandGroup autonomusCommands;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -54,6 +68,28 @@ public class Robot extends TimedRobot {
     PnuLifts.setDefaultCommand( new PneumaticLifts());
     lifts = new Lifts();
     lifts.setDefaultCommand( new runLifts());
+
+    leftEncoder = new Encoder(2, 3, false , EncodingType.k4X);
+    leftEncoder.setDistancePerPulse(18.8 / 2048.0);
+    leftEncoder.setMaxPeriod(0.1);
+    leftEncoder.setMinRate(5);
+    leftEncoder.setSamplesToAverage(4);
+    leftEncoder.setReverseDirection(false);
+   
+    rightEncoder = new Encoder(0, 1,true, EncodingType.k4X);
+    rightEncoder.setDistancePerPulse(18.8 / 2048.0);
+    rightEncoder.setMaxPeriod(0.1);
+    rightEncoder.setMinRate(5);
+    rightEncoder.setSamplesToAverage(4);
+    rightEncoder.setReverseDirection(true);
+
+    autoTab = Shuffleboard.getTab("PID");
+    leftEncoderData = autoTab.add("Left Encoder", leftEncoder.getDistance()).getEntry();
+    rightEncoderData = autoTab.add("Right Encoder", rightEncoder.getDistance()).getEntry();
+    timer = new Timer();
+    timer.start();
+
+    autonomusCommands = new SequentialCommandGroup(new AutoDrive(48));
   }
 
   /**
@@ -64,7 +100,10 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    leftEncoderData.setDouble(leftEncoder.getDistance());
+    rightEncoderData.setDouble(rightEncoder.getDistance());
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
@@ -81,6 +120,9 @@ public class Robot extends TimedRobot {
     m_autoSelected = m_chooser.getSelected();
     // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
     System.out.println("Auto selected: " + m_autoSelected);
+    CommandScheduler.getInstance().schedule(autonomusCommands);
+    leftEncoder.reset();
+    rightEncoder.reset();
   }
 
   /** This function is called periodically during autonomous. */
@@ -95,6 +137,7 @@ public class Robot extends TimedRobot {
         // Put default auto code here
         break;
     }
+    CommandScheduler.getInstance().run();
   }
 
   /** This function is called once when teleop is enabled. */
