@@ -11,12 +11,12 @@ public class OI {
     private static XboxController opController;
     private static double DEADZONE = 0.05;
     private static double TRIGGER_THRESH = 0.5;
-    public static int RIGHT = 0;
-    public static int LEFT = 1;
-    public static int UP = 2;
-    public static int DOWN = 3;
-    public static int X = 4;
-    public static int Y = 5;
+    public static final int RIGHT = 0;
+    public static final int LEFT = 1;
+    public static final int UP = 2;
+    public static final int DOWN = 3;
+    public static final int X = 4;
+    public static final int Y = 5;
 
     public OI() {
         Motor.setMotorConfigPath(filePath);

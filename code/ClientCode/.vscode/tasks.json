@@ -1,0 +1,26 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "gradle",
+			"id": "c:\\Users\\Wired Robotics\\Github Repos\\FRC_2022\\code\\ClientCodeapp:buildapp",
+			"script": "app:build",
+			"description": "Assembles and tests this project.",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"project": "BBClient",
+			"buildFile": "C:\\Users\\Wired Robotics\\Github Repos\\FRC_2022\\code\\ClientCode\\app\\build.gradle",
+			"rootProject": "ClientCode",
+			"projectFolder": "c:\\Users\\Wired Robotics\\Github Repos\\FRC_2022\\code\\ClientCode",
+			"workspaceFolder": "c:\\Users\\Wired Robotics\\Github Repos\\FRC_2022\\code\\ClientCode",
+			"args": "",
+			"javaDebug": false,
+			"problemMatcher": [
+				"$gradle"
+			],
+			"label": "gradle: BBClient:build"
+		}
+	]
+}

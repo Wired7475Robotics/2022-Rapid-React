@@ -18,7 +18,7 @@ public class Pneumatics extends SubsystemBase{
         enabled = compressor.enabled();
         pSwitch = compressor.getPressureSwitchValue();
         current = compressor.getPressure();
-        Lifts = new Solenoid(PneumaticsModuleType.REVPH , 15 );
+        Lifts = new Solenoid(PneumaticsModuleType.REVPH , 14 );
     }
 
     public void teleLift() {

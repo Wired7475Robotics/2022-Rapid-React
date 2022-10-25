@@ -275,14 +275,15 @@ public class Motor {
     *@param time the time (in seconds) that the motor will be run for
     *@param speed The speed to run the motor at.
     */
+
     public void runForTime(double speed,int time){
-        run(speed);
-        try {
-            TimeUnit.SECONDS.sleep(time);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        run(0);
+            run(speed);
+            try {
+                TimeUnit.SECONDS.sleep(time);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            run(0);
     }
 
 

@@ -14,12 +14,14 @@ public class Intake extends SubsystemBase {
 
     public void teleIntake() {
         if (OI.getOpB()) {
-            intake.run(-0.25);
+            intake.run(-0.5);
         } else {
             intake.run(0);
         }
         if (OI.getOpX()) {
-            ballLoad.run(0.5);
+            ballLoad.run(1);
+        } else if (OI.getOpY()){
+            ballLoad.run(-1);
         } else {
             ballLoad.run(0);
         }
