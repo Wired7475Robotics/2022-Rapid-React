@@ -4,13 +4,13 @@ import frc.robot.commands.wiredAPI.Motor;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 
-public class OI {
+public class Controll {
     
     private static String filePath = Filesystem.getDeployDirectory().getPath();
     private static XboxController driveController;
     private static XboxController opController;
-    private static double DEADZONE = 0.05;
-    private static double TRIGGER_THRESH = 0.5;
+    private static final double DEADZONE = 0.05;
+    private static final double TRIGGER_THRESH = 0.5;
     public static final int RIGHT = 0;
     public static final int LEFT = 1;
     public static final int UP = 2;
@@ -18,7 +18,7 @@ public class OI {
     public static final int X = 4;
     public static final int Y = 5;
 
-    public OI() {
+    public Controll() {
         Motor.setMotorConfigPath(filePath);
         driveController = new XboxController(0);
         opController = new XboxController(1);

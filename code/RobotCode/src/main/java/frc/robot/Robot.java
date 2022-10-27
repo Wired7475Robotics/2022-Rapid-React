@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
   NetworkTableEntry rightEncoderData;
   public static Timer timer;
   private String m_autoSelected;
-  public static OI oi;
+  public static Controll oi;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private SequentialCommandGroup autonomusCommands;
 
@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    oi = new OI();
+    oi = new Controll();
     drivetrain = new DriveTrain();
     drivetrain.setDefaultCommand( new ArcadeDrive());
     shooter = new Shooter();

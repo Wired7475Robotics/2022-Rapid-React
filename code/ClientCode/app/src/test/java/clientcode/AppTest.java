@@ -4,6 +4,9 @@
 package clientcode;
 
 import org.junit.jupiter.api.Test;
+
+import clientcode.bbclient.client.BBClient;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {

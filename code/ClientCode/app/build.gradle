@@ -39,7 +39,7 @@ dependencies {
 
 application {
     // Define the main class for the application.
-    mainClass = 'clientcode.BBClient'
+    mainClass = 'clientcode.bbclient.client.BBClient'
 }
 
 tasks.named('test') {

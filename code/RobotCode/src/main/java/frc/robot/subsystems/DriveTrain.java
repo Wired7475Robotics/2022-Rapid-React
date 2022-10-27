@@ -7,7 +7,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OI;
+import frc.robot.Controll;
 import frc.robot.Robot;
 
 public class DriveTrain extends SubsystemBase{
@@ -36,18 +36,18 @@ public class DriveTrain extends SubsystemBase{
     }
 
     public void teleDrive() {
-        if (OI.getDriveBumper(OI.RIGHT)){
-            xSpeed = OI.getDriveRightStick(OI.X);
-            zRotation = OI.getDriveLeftStick(OI.Y);
-        } else if (OI.getDriveBumper(OI.LEFT)){
-            xSpeed = OI.getDriveRightStick(OI.X) * MED_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.Y) * MED_SPEED_COEFF;
-        } else if (OI.getDriveTrigger(OI.RIGHT)){
-            xSpeed = OI.getDriveRightStick(OI.X) *MED_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.Y) * LOW_SPEED_COEFF;
+        if (Controll.getDriveBumper(Controll.RIGHT)){
+            xSpeed = Controll.getDriveRightStick(Controll.X);
+            zRotation = Controll.getDriveLeftStick(Controll.Y);
+        } else if (Controll.getDriveBumper(Controll.LEFT)){
+            xSpeed = Controll.getDriveRightStick(Controll.X) * MED_SPEED_COEFF;
+            zRotation = Controll.getDriveLeftStick(Controll.Y) * MED_SPEED_COEFF;
+        } else if (Controll.getDriveTrigger(Controll.RIGHT)){
+            xSpeed = Controll.getDriveRightStick(Controll.X) *MED_SPEED_COEFF;
+            zRotation = Controll.getDriveLeftStick(Controll.Y) * LOW_SPEED_COEFF;
         }  else {
-            xSpeed = OI.getDriveRightStick(OI.X) * HIGH_SPEED_COEFF;
-            zRotation = OI.getDriveLeftStick(OI.Y) * HIGH_SPEED_COEFF;
+            xSpeed = Controll.getDriveRightStick(Controll.X) * HIGH_SPEED_COEFF;
+            zRotation = Controll.getDriveLeftStick(Controll.Y) * HIGH_SPEED_COEFF;
         }
 
 

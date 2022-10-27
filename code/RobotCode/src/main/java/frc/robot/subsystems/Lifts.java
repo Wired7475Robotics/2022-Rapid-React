@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OI;
+import frc.robot.Controll;
 import frc.robot.commands.wiredAPI.Motor;
 
 public class Lifts extends SubsystemBase {
@@ -22,13 +22,10 @@ public class Lifts extends SubsystemBase {
     }
 
     public void teleLifts() {
-
-        if(OI.getOpLeftStick(OI.Y) != 0)
-
-            leftPulleyMotor2.run(OI.getOpLeftStick(OI.Y));
-            rightPulleyMotor1.run(OI.getOpLeftStick(OI.Y));
-            rightPulleyMotor2.run(OI.getOpLeftStick(OI.Y));
-            leftPulleyMotor1.run(-OI.getOpLeftStick(OI.Y));
-    } 
+        leftPulleyMotor2.run(Controll.getOpBumper(Controll.RIGHT) ? Controll.getOpRightStick(Controll.Y) : Controll.getOpLeftStick(Controll.Y));
+        rightPulleyMotor1.run(Controll.getOpBumper(Controll.RIGHT) ? Controll.getOpLeftStick(Controll.Y) : Controll.getOpLeftStick(Controll.Y));
+        rightPulleyMotor2.run(Controll.getOpBumper(Controll.RIGHT) ? Controll.getOpLeftStick(Controll.Y) : Controll.getOpLeftStick(Controll.Y));
+        leftPulleyMotor1.run(Controll.getOpBumper(Controll.RIGHT) ? -Controll.getOpRightStick(Controll.Y) : -Controll.getOpLeftStick(Controll.Y));
+    }
 
 }

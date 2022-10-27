@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.OI;
+import frc.robot.Controll;
 import frc.robot.commands.wiredAPI.Motor;
 
 public class Shooter extends SubsystemBase {
@@ -19,10 +19,14 @@ public class Shooter extends SubsystemBase {
 
     public void teleShooter(){
         
-        if(OI.getOpA())
+        if(Controll.getOpA())
             shooter.run(1);
-        else 
+        else if(Controll.getOpTrigger(Controll.RIGHT))
+            shooter.run(0.1);
+        else
             shooter.run(0);
+
+        
         
     }
 
