@@ -30,6 +30,14 @@ public class Shooter extends SubsystemBase {
         
     }
 
+    public void autoShoot(boolean state) {
+        if(state) {
+            shooter.run(1.0);
+        } else {
+            shooter.run(0.0);
+        }
+    }
+
 
 
 }

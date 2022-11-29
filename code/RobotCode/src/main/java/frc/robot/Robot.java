@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot {
   public static Controll oi;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private SequentialCommandGroup autonomusCommands;
+  private SequentialCommandGroup autonomusIntake;
+  private ParallelCommandGroup autonomusShooter;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -89,7 +92,11 @@ public class Robot extends TimedRobot {
     timer = new Timer();
     timer.start();
 
-    autonomusCommands = new SequentialCommandGroup(new AutoDrive(48));
+    autonomusIntake = new SequentialCommandGroup(new AutoDelay(5), new AutoFeed(5));
+    autonomusShooter = new ParallelCommandGroup(autonomusIntake, new AutoShooter(10));
+
+    autonomusCommands = new SequentialCommandGroup(new AutoDrive(48),  new AutoFeed(5)/*autonomusShooter*/);
+
   }
 
   /**

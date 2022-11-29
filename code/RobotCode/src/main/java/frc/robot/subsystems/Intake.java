@@ -26,4 +26,14 @@ public class Intake extends SubsystemBase {
             ballLoad.run(0);
         }
     }
+
+    public void autoIntake(boolean onState) {
+        if(onState) {
+            ballLoad.run(1.0);
+            intake.run(-0.5);
+        } else {
+            ballLoad.run(0.0);
+            intake.run(0.0);
+        }
+    }
 }

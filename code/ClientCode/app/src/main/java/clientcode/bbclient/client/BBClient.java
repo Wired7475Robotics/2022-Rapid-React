@@ -27,6 +27,9 @@ public class BBClient {
     private void runClient(){
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300,600);
+
+        frame.setVisible(true);
     }
 
     private void getTasbles(){
